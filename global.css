@@ -62,7 +62,7 @@ textarea {
     -moz-box-shadow: #000 0 1px 0, 0 1px 3px black;
     box-shadow: #000 0 1px 0, 0 1px 3px black;
     transition: box-shadow 0.3s ease-in-out;
-    overflow: hidden;
+    overflow: auto; /* souple what the fuck why would you set it to hidden */
 }
 hr {
     display: block;
