@@ -291,6 +291,9 @@ chaosEvents.doWhenReady(() => {
             document.getElementById("ud-username").innerText = "@" + incoming.user.username;
             document.getElementById("ud-banner").style.background = ''
             document.getElementById("ud-info").style.background = '';
+            if(incoming.user.profile.css) {
+                document.getElementById("profile-css").innerText = incoming.user.profile.css;
+            }
             if(incoming.user.banner) {
                 document.getElementById("ud-banner").style.background = `url('${incoming.user.banner}')`;
             }
@@ -362,7 +365,10 @@ function switchScene (newScene, isguest) {
     };
     if (scene == "user-display") {
         document.getElementById("ud-avatar").src = "/assets/default.png";
-    };
+    }
+    if (!(newScene == "user-display")) {
+        document.getElementById("profile-css").innerText = ''
+    }
     if (newScene == "main-scene" && isguest == true) {
         for (const i in posts_list) {
             loadPost(posts_list[i], true, false);
@@ -482,6 +488,12 @@ function setBanner() {
     ws.send(JSON.stringify({command: "set_property", property: "banner", value: document.getElementById("mc-banner").value}))
     clearValueOf(["mc-banner"])
 };
+
+function setCustomProfile() {
+    last_cmd = "set_custom_profile";
+    ws.send(JSON.stringify({command: "set_property", property: "css", value: document.getElementById("mc-profile-custom").value}))
+    clearValueOf(["mc-profile-custom"])
+}
 
 function setBio() {
     last_cmd = "set_bio";
