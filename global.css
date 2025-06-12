@@ -173,25 +173,15 @@ blockquote {
     box-sizing: border-box;
     background-size: cover !important;
     background-position: center !important;
+    justify-content: flex-end;
+    display: flex
 }
 #ud-info {
-    padding: 3px;
-    box-shadow: 0 0 2px 3px var(--deer-background);
+    padding: 3px 10px;
+    box-shadow: 0 -5px 2px -3px #00000087;
     position: relative;
     overflow: hidden;
-}
-#info-banner {
-    background: var(--deer-button);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    position: absolute;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    filter: blur(3px);
-    mix-blend-mode: screen;
+    backdrop-filter: blur(30px);
 }
 #ud-lastfm-container {
     width: 100%;
