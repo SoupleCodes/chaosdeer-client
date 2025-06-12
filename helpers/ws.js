@@ -289,10 +289,12 @@ chaosEvents.doWhenReady(() => {
             document.getElementById("ud-avatar").src = incoming.user.avatar;
             document.getElementById("ud-display-name").innerText = incoming.user.display_name;
             document.getElementById("ud-username").innerText = "@" + incoming.user.username;
+            document.getElementById("ud-banner").style.background = ''
+            document.getElementById("ud-info").style.background = '';
+            document.getElementById("info-banner").style.background = '';
             if(incoming.user.banner) {
                 document.getElementById("ud-banner").style.background = `url('${incoming.user.banner}')`;
-                document.getElementById("ud-info").style.background = `url('${incoming.user.banner}')`;
-                document.getElementById("ud-info").style.backgroundBlendMode = "lighten";
+                document.getElementById("info-banner").style.background = `url('${incoming.user.banner}')`;
             }
             document.getElementById("ud-created").innerText = new Date(incoming.user.created * 1000).toLocaleString();
             document.getElementById("ud-permissions").innerText = `Permissions: ${incoming.user.permissions.toString().toLowerCase().replaceAll(",", ", ")}`;

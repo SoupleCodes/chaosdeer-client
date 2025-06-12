@@ -167,14 +167,31 @@ blockquote {
     border: 2px solid;
 }
 #ud-banner {
-    height: 78px;
+    height: 176px;
     background: var(--deer-button-hover);
     margin-top: 11px;
+    box-sizing: border-box;
+    background-size: cover !important;
+    background-position: center !important;
 }
 #ud-info {
     padding: 3px;
-    background: var(--deer-button);
     box-shadow: 0 0 2px 3px var(--deer-background);
+    position: relative;
+    overflow: hidden;
+}
+#info-banner {
+    background: var(--deer-button);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    position: absolute;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    filter: blur(3px);
+    mix-blend-mode: screen;
 }
 #ud-lastfm-container {
     width: 100%;
