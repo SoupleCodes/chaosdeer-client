@@ -124,7 +124,7 @@ blockquote {
     overflow-wrap: break-word;
     box-sizing: border-box;
     width: 100%;
-    box-shadow: 0 0 4px -1px black;
+    box-shadow: 0 0 4px -1px black, inset 0 57px 10px -14px #ffffff08;
     border-bottom: 1px dashed black;
     border-top: 1px solid #ffffff24;
 }
