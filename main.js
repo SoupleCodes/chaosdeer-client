@@ -258,7 +258,9 @@ function loadPost(resf, isFetch, isInbox) {
         post.appendChild(avatar);
 
         var postUsername = document.createElement("span");
-        postUsername.innerHTML = `<b>${resf.author.display_name}</b> (<span class="mono">@${resf.author.username}</span>)`;
+        postUsername.innerHTML = `<b></b> (<span class="mono"></span>)`;
+        postUsername.querySelector("b").innerText = resf.author.display_name;
+        postUsername.querySelector("span").innerText = `@${resf.author.username}`;
         if (resf.author.bot) {
             postUsername.innerHTML += ' <span title="This user is a robot." class="inline-icon material-symbols-outlined">smart_toy</span>'
         };
