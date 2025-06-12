@@ -258,17 +258,17 @@ function loadPost(resf, isFetch, isInbox) {
             avatar.src = "/assets/default.png";
         };
         avatar.setAttribute("onerror", "this.src = '/assets/default.png';")
-        avatar.setAttribute("onclick", `showUser("${resf.author.username}");`); // TODO: use this more often
+        avatar.setAttribute("onclick", `showUser("${resf.author.username.replaceAll('"', '\\"')}");`); // TODO: use this more often
         avatar.classList.add("clickable");
         avatar.classList.add("pfp");
         post.appendChild(avatar);
 
         var postUsername = document.createElement("span");
-        postUsername.innerHTML = `<b>${resf.author.display_name}</b> (<span class="mono">@${resf.author.username}</span>)`;
+        postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
         if (resf.author.bot) {
             postUsername.innerHTML += ' <span title="This user is a robot." class="inline-icon material-symbols-outlined">smart_toy</span>'
         };
-        postUsername.setAttribute("onclick", `showUser("${resf.author.username}");`);
+        postUsername.setAttribute("onclick", `showUser("${resf.author.username.replaceAll('"', '\\"')}");`);
         postUsername.classList.add("clickable");
         post.appendChild(postUsername);
 
