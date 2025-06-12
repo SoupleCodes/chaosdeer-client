@@ -180,6 +180,12 @@ async function uploadFileFraud(file) { // Edited version of above
     };
 };
 
+function deHTML(t) {
+    t = t.replaceAll("<", "&lt;")
+    t = t.replaceAll("&", "&gt;")
+    return t
+}
+
 function updateUlist() {
     var ulstring = "";
     for (const i in ulist) {
@@ -187,7 +193,7 @@ function updateUlist() {
         if (raw_ulist[ulist[i]]['bot']) {
             ba += ` <span title="This user is a robot." class="inline-icon-u material-symbols-outlined">smart_toy</span>`
         }
-        ulstring += `<span class="clickable" title="${raw_ulist[ulist[i]]['client']}" onclick="showUser('${ulist[i]}');">${ulist[i]}${ba}</span>` //vulnerable!
+        ulstring += `<span class="clickable" title="${raw_ulist[ulist[i]]['client'].replaceAll("'", "\\'")}" onclick="showUser('${ulist[i].replaceAll("'", "\\'")}');">${deHTML(ulist[i])}${ba}</span>` //vulnerable!
         if (i != ulist.length - 1) {
             ulstring += ", "
         };
