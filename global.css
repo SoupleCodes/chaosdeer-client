@@ -167,7 +167,7 @@ blockquote {
     border: 2px solid;
 }
 #ud-banner {
-    height: 176px;
+    height: 240px;
     background: var(--deer-button-hover);
     margin-top: 11px;
     box-sizing: border-box;
