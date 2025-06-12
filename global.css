@@ -181,7 +181,8 @@ blockquote {
     box-shadow: 0 -5px 2px -3px #00000087;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(30px);
+    backdrop-filter: blur(6px);
+    background: linear-gradient(#0000, #000a);
 }
 #ud-lastfm-container {
     width: 100%;
