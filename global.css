@@ -84,7 +84,10 @@ blockquote {
 }
 .inter { cursor: pointer; }
 .inter:hover { text-decoration: underline;}
-
+.flex { display: flex }
+.flex-column { flex-direction: column }
+.flex-row { flex-direction: row }
+.gap { gap: 10px }
 .message-input {
     height: 35px;
     min-height: 35px;
@@ -124,7 +127,7 @@ blockquote {
     overflow-wrap: break-word;
     box-sizing: border-box;
     width: 100%;
-    box-shadow: 0 0 4px -1px black;
+    box-shadow: 0 0 4px -1px black, inset 0 57px 10px -14px #ffffff08;
     border-bottom: 1px dashed black;
     border-top: 1px solid #ffffff24;
 }
@@ -163,6 +166,16 @@ blockquote {
     margin-top: 1px;
     border: 2px solid;
 }
+#ud-banner {
+    height: 78px;
+    background: var(--deer-button-hover);
+    margin-top: 11px;
+}
+#ud-info {
+    padding: 3px;
+    background: var(--deer-button);
+    box-shadow: 0 0 2px 3px var(--deer-background);
+}
 #ud-lastfm-container {
     width: 100%;
     padding: 6px;
@@ -172,6 +185,9 @@ blockquote {
     overflow-wrap: break-word;
     box-sizing: border-box;
 }
+#ud-display-name {
+    font-weight: bold;
+}
 #ud-bio-container {
     width: 100%;
     padding: 6px;
@@ -180,6 +196,16 @@ blockquote {
     word-break: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
+    flex-grow: 0.5;
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    background: var(--deer-button);
+    padding: 5px;
+}
+#ud-bio-container #ud-bio, #ud-lastfm-container #ud-lastfm-wrapper {
+    padding: 5px
 }
 #ud-bio p {
     padding: 0;

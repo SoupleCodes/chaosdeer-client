@@ -1,10 +1,12 @@
 <button onclick="switchScene('main-scene');">Return to Home</button>
 <br>
-<img id="ud-avatar" class="pfp" src="/assets/default.png" onerror="this.src = '/assets/default.png'">
-<span id="ud-display-name"></span> <span id="ud-d-tags"></span>
-<br>
-<span id="ud-username" class="mono"></span>
-<br>
+<div id="ud-banner"></div>
+<div id="ud-info">
+    <img id="ud-avatar" class="pfp" src="/assets/default.png" onerror="this.src = '/assets/default.png'">
+    <span id="ud-display-name"></span> <span id="ud-d-tags"></span>
+    <br>
+    <span id="ud-username" class="mono"></span>
+</div>
 <small id="ud-created"></small>
 <br>
 <small id="ud-permissions"></small>
@@ -13,14 +15,21 @@
 <span id="ud-banned" class="hidden"><small id="ud-banned-span"></small>
     <br>
 </span>
-<div id="ud-bio-container"><b>Bio</b>
-    <span id="ud-bio">This user does not have a bio.</span>
-</div>
-<div id="ud-lastfm-container">
-    <img id="ud-lastfm-cover" class="album-cover" src="/assets/default.png" onerror="this.src = '/assets/default.png'">
-    <span id="ud-lastfm-name"></span>
-    <br>
-    <span id="ud-lastfm-artist"></span>
-    <br>
-    <small id="ud-lastfm-album"></small>
+<div class="flex gap">
+    <div class="flex-column" id="ud-bio-container">
+        <div class="title">Bio</div>
+        <span id="ud-bio">This user does not have a bio.</span>
+    </div>
+    <div class="flex-column" id="ud-lastfm-container">
+        <div class="title">LastFM</div>
+        <div id="ud-lastfm-wrapper">
+            <img id="ud-lastfm-cover" class="album-cover" src="/assets/default.png"
+                onerror="this.src = '/assets/default.png'">
+            <span id="ud-lastfm-name"></span>
+            <br>
+            <span id="ud-lastfm-artist"></span>
+            <br>
+            <small id="ud-lastfm-album"></small>
+        </div>
+    </div>
 </div>

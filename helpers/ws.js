@@ -289,6 +289,11 @@ chaosEvents.doWhenReady(() => {
             document.getElementById("ud-avatar").src = incoming.user.avatar;
             document.getElementById("ud-display-name").innerText = incoming.user.display_name;
             document.getElementById("ud-username").innerText = "@" + incoming.user.username;
+            if(incoming.user.banner) {
+                document.getElementById("ud-banner").style.background = `url('${incoming.user.banner}')`;
+                document.getElementById("ud-info").style.background = `url('${incoming.user.banner}')`;
+                document.getElementById("ud-info").style.backgroundBlendMode = "lighten";
+            }
             document.getElementById("ud-created").innerText = new Date(incoming.user.created * 1000).toLocaleString();
             document.getElementById("ud-permissions").innerText = `Permissions: ${incoming.user.permissions.toString().toLowerCase().replaceAll(",", ", ")}`;
             document.getElementById("ud-special").innerHTML = ""
@@ -470,6 +475,12 @@ function setAvatar() {
     last_cmd = "set_avatar";
     ws.send(JSON.stringify({command: "set_property", property: "avatar", value: document.getElementById("mc-avatar").value}))
     clearValueOf(["mc-avatar"])
+};
+
+function setBanner() {
+    last_cmd = "set_banner";
+    ws.send(JSON.stringify({command: "set_property", property: "banner", value: document.getElementById("mc-banner").value}))
+    clearValueOf(["mc-banner"])
 };
 
 function setBio() {
