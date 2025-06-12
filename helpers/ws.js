@@ -294,7 +294,7 @@ chaosEvents.doWhenReady(() => {
             document.getElementById("ud-info").style.backgroundBlendMode = ''
             if(incoming.user.banner) {
                 document.getElementById("ud-banner").style.background = `url('${incoming.user.banner}')`;
-                document.getElementById("ud-info").style.background = `url('${incoming.user.banner}')`;
+                document.getElementById("ud-info").style.background = `90% url('${incoming.user.banner}')`;
                 document.getElementById("ud-info").style.backgroundBlendMode = "lighten";
             }
             document.getElementById("ud-created").innerText = new Date(incoming.user.created * 1000).toLocaleString();
