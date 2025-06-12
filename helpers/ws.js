@@ -365,7 +365,10 @@ function switchScene (newScene, isguest) {
     };
     if (scene == "user-display") {
         document.getElementById("ud-avatar").src = "/assets/default.png";
-    };
+    }
+    if (!(newScene == "user-display")) {
+        document.getElementById("profile-css").innerText = ''
+    }
     if (newScene == "main-scene" && isguest == true) {
         for (const i in posts_list) {
             loadPost(posts_list[i], true, false);
