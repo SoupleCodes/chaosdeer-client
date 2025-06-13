@@ -181,8 +181,8 @@ async function uploadFileFraud(file) { // Edited version of above
 };
 
 function deHTML(t) {
-    t = t.replaceAll("<", "&lt;")
     t = t.replaceAll("&", "&gt;")
+    t = t.replaceAll("<", "&lt;")
     return t
 }
 
