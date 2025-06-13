@@ -180,6 +180,12 @@ async function uploadFileFraud(file) { // Edited version of above
     };
 };
 
+function deHTML(t) {
+    t = t.replaceAll("&", "&gt;")
+    t = t.replaceAll("<", "&lt;")
+    return t
+}
+
 function updateUlist() {
     var ulstring = "";
     for (const i in ulist) {
@@ -187,7 +193,7 @@ function updateUlist() {
         if (raw_ulist[ulist[i]]['bot']) {
             ba += ` <span title="This user is a robot." class="inline-icon-u material-symbols-outlined">smart_toy</span>`
         }
-        ulstring += `<span class="clickable" title="${raw_ulist[ulist[i]]['client']}" onclick="showUser('${ulist[i]}');">${ulist[i]}${ba}</span>` //vulnerable!
+        ulstring += `<span class="clickable" title="${raw_ulist[ulist[i]]['client'].replaceAll("'", "\\'")}" onclick="showUser('${ulist[i].replaceAll("'", "\\'")}');">${deHTML(ulist[i])}${ba}</span>` //vulnerable!
         if (i != ulist.length - 1) {
             ulstring += ", "
         };
@@ -252,19 +258,17 @@ function loadPost(resf, isFetch, isInbox) {
             avatar.src = "/assets/default.png";
         };
         avatar.setAttribute("onerror", "this.src = '/assets/default.png';")
-        avatar.setAttribute("onclick", `showUser("${resf.author.username}");`); // TODO: use this more often
+        avatar.setAttribute("onclick", `showUser("${resf.author.username.replaceAll('"', '\\"')}");`); // TODO: use this more often
         avatar.classList.add("clickable");
         avatar.classList.add("pfp");
         post.appendChild(avatar);
 
         var postUsername = document.createElement("span");
-        postUsername.innerHTML = `<b></b> (<span class="mono"></span>)`;
-        postUsername.querySelector("b").innerText = resf.author.display_name;
-        postUsername.querySelector("span").innerText = `@${resf.author.username}`;
+        postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
         if (resf.author.bot) {
             postUsername.innerHTML += ' <span title="This user is a robot." class="inline-icon material-symbols-outlined">smart_toy</span>'
         };
-        postUsername.setAttribute("onclick", `showUser("${resf.author.username}");`);
+        postUsername.setAttribute("onclick", `showUser("${resf.author.username.replaceAll('"', '\\"')}");`);
         postUsername.classList.add("clickable");
         post.appendChild(postUsername);
 
