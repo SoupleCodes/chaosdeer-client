@@ -134,13 +134,13 @@ blockquote {
 .pfp {
     border-radius: 1px;
     padding: 1px;
-    background: white;
     width: 36px;
     height: 36px;
     float: left;
     margin-right: 8px;
     margin-top: 2px;
     border: 2px solid;
+    box-shadow: 0 0 2px 1.5px #00000091;
 }
 .mono {
     font-family: monospace;
