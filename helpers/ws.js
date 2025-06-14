@@ -477,6 +477,44 @@ function setDisplayName() {
     clearValueOf(["mc-display-name"])
 };
 
+function setDisplayFont() {
+    last_cmd = "set_display_font";
+    ws.send(JSON.stringify({command: "set_property", property: "font", value: document.getElementById("mc-display-font").value}))
+    clearValueOf(["mc-display-font"])
+}; 
+
+function setDisplayColor() {
+    last_cmd = "set_display_color";
+    ws.send(JSON.stringify({command: "set_property", property: "color", value: document.getElementById("mc-display-color").value}))
+}
+
+function setPostBackground() {
+    last_cmd = "set_post_background";
+    ws.send(JSON.stringify({command: "set_property", property: "background", value: document.getElementById("mc-post-background").value}))
+    clearValueOf(["mc-post-background"])
+};
+
+function setPostBorderBottom() {
+    last_cmd = "set_post_border_bottom";
+    ws.send(JSON.stringify({command: "set_property", property: "border_bottom", value: document.getElementById("mc-post-border-bottom").value}))
+    clearValueOf(["mc-post-border-bottom"])
+};
+
+function setPostBorderTop() {  
+    last_cmd = "set_post_border_top";
+    ws.send(JSON.stringify({ command: "set_property", property: "border_top", value: document.getElementById("mc-post-border-top").value}))
+}
+
+function setPostBorderLeft() {
+    last_cmd = "set_post_border_left";
+    ws.send(JSON.stringify({ command: "set_property", property: "border_left", value: document.getElementById("mc-post-border-left").value}))    
+}
+
+function setPostBorderRight() {
+    last_cmd = "set_post_border_right";
+    ws.send(JSON.stringify({ command: "set_property", property: "border_right", value: document.getElementById("mc-post-border-right").value}))
+}
+
 function setAvatar() {
     last_cmd = "set_avatar";
     ws.send(JSON.stringify({command: "set_property", property: "avatar", value: document.getElementById("mc-avatar").value}))
