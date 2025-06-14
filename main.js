@@ -265,6 +265,29 @@ function loadPost(resf, isFetch, isInbox) {
 
         var postUsername = document.createElement("span");
         postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
+        if(resf.author.color) {
+            postUsername.querySelector("b").style.color = resf.author.color;
+            postUsername.querySelector("b").style.textShadow = "0 0 3px " + resf.author.color
+        }
+        if(resf.author.font) {
+            postUsername.querySelector("b").style.fontFamily = resf.author.font;
+            postUsername.querySelector("b").style.fontWeight = "initial"
+        }
+        if(resf.author.background) {
+            post.style.backgroundColor = resf.author.background;
+        }
+        if(resf.author["border-top"]) {
+            post.style.borderTop = resf.author["border-top"];
+        }
+        if(resf.author["border-bottom"]) {
+            post.style.borderBottom = resf.author["border-bottom"];
+        }
+        if(resf.author["border-left"]) {
+            post.style.borderLeft = resf.author["border-left"];
+        }
+        if(resf.author["border-right"]) {
+            post.style.borderRight = resf.author["border-right"];
+        }
         if (resf.author.bot) {
             postUsername.innerHTML += ' <span title="This user is a robot." class="inline-icon material-symbols-outlined">smart_toy</span>'
         };
