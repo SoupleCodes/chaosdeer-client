@@ -267,20 +267,24 @@ function loadPost(resf, isFetch, isInbox) {
         postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
         if(resf.author.color) {
             postUsername.querySelector("b").style.color = resf.author.color;
-            postUsername.querySelector("b").style.textShadow = "0 0 3px " + resf.author.color
         }
         if(resf.author.font) {
             postUsername.querySelector("b").style.fontFamily = resf.author.font;
-            postUsername.querySelector("b").style.fontWeight = "initial"
         }
         if(resf.author.background) {
-            post.style.backgroundColor = resf.author.background;
+            post.style.background = resf.author.background; 
+        }
+        if(resf.author.weight) {
+            postUsername.querySelector("b").style.fontWeight = resf.author.weight;
+        }
+        if(resf.author.shadow) {
+            postUsername.querySelector("b").style.textShadow = resf.author.shadow; 
         }
         if(resf.author["border-top"]) {
             post.style.borderTop = "1px solid " + resf.author["border-top"];
         }
         if(resf.author["border-bottom"]) {
-            post.style.borderBottom = "1px solid " + resf.author["border-bottom"];
+            post.style.borderBottom = "1px solid " + resf.author["border-bottom"]; 
         }
         if(resf.author["border-left"]) {
             post.style.borderLeft = "1px solid " + resf.author["border-left"];

@@ -488,6 +488,16 @@ function setDisplayColor() {
     ws.send(JSON.stringify({command: "set_property", property: "color", value: document.getElementById("mc-display-color").value}))
 }
 
+function setDisplayShadow() {
+    last_cmd = "set_display_shadow";
+    ws.send(JSON.stringify({command: "set_property", property: "shadow", value: document.getElementById("mc-display-shadow").value}))
+}
+
+function setDisplayWeight() {
+    last_cmd = "set_display_weight";
+    ws.send(JSON.stringify({command: "set_property", property: "weight", value: document.getElementById("mc-display-weight").value}))
+}
+
 function setPostBackground() {
     last_cmd = "set_post_background";
     ws.send(JSON.stringify({command: "set_property", property: "background", value: document.getElementById("mc-post-background").value}))
