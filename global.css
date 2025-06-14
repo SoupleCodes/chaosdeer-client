@@ -15,7 +15,7 @@ code {
     border-bottom: 1px solid #ffffff3d;
 }
 button {
-    border-radius: 0px;
+    border-radius: 2px;
     padding: 7px;
     font-family: 'Noto Sans', sans-serif;
     margin-bottom: 4px;
@@ -33,7 +33,7 @@ button:disabled, button[disabled] {
 }
 input {
     border: none;
-    border-radius: 0;
+    border-radius: 2px;
     padding: 7px;
     font-family: 'Noto Sans', sans-serif;
     margin-bottom: 4px;
@@ -58,6 +58,7 @@ textarea {
     background-color: var(--deer-button-hover);
     color: var(--deer-foreground);
     border: 1px solid var(--deer-horizontalrule);
+    border-radius: 2px;
     -webkit-box-shadow: #000 0 1px 0, 0 1px 3px black;
     -moz-box-shadow: #000 0 1px 0, 0 1px 3px black;
     box-shadow: #000 0 1px 0, 0 1px 3px black;
@@ -130,6 +131,7 @@ blockquote {
     box-shadow: 0 0 4px -1px black, inset 0 57px 10px -14px #ffffff08;
     border-bottom: 1px dashed black;
     border-top: 1px solid #ffffff24;
+    border-radius: 2px;
 }
 .pfp {
     border-radius: 2px;
