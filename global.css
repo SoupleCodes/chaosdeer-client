@@ -132,14 +132,14 @@ blockquote {
     border-top: 1px solid #ffffff24;
 }
 .pfp {
-    border-radius: 1px;
+    border-radius: 2px;
     padding: 1px;
     width: 36px;
     height: 36px;
     float: left;
     margin-right: 8px;
     margin-top: 2px;
-    border: 2px solid;
+    border: 1px solid;
     box-shadow: 0 0 2px 1.5px #00000091;
 }
 .mono {
@@ -368,7 +368,7 @@ hr {
     background-color: var(--deer-button-hover);
 }
 .pfp {
-    border: 2px var(--deer-image-border) solid;
+    border: 1px var(--deer-image-border) solid;
 }
 .album-cover {
     border: 2px var(--deer-image-border) solid;
