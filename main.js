@@ -70,6 +70,14 @@ function is_theme_blocked(user) {
     return theme_blocklist.includes(user)
 }
 
+function toggle_user_blocked_theme(user) {
+    if (is_theme_blocked(user))
+        unblock_users_theme(user)
+    else
+        block_users_theme(user);
+    return is_theme_blocked(user)
+}
+
 //TODO: more to the bottom bc this happens after all the functions are initialised n stuff
 chaosEvents.addEventListener('ready', () => {
     document.addEventListener('keydown', (e) => {
@@ -301,7 +309,7 @@ function loadPost(resf, isFetch, isInbox) {
 
         var postUsername = document.createElement("span");
         postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
-        if (settings.custom_post_themes) {
+        if (settings.custom_post_themes && !is_theme_blocked(resf.author.username)) {
             if(resf.author.profile.color)
                 postUsername.querySelector("b").style.color = resf.author.profile.color;
             if(resf.author.profile.font)
@@ -380,7 +388,8 @@ function loadPost(resf, isFetch, isInbox) {
     } else {
         postContent.innerText = findandReplaceMentions(resf.content);
     }
-    if (settings.custom_post_themes &&
+    if (!isInbox && settings.custom_post_themes &&
+        !is_theme_blocked(resf.author.username) &&
         resf.author.profile.background &&
         resf.author.profile.background.match(/^#([0-9a-fA-f]{6}|[0-9a-fA-f]{3})$/g)) {
         const [red, green, blue] = resf.author.profile.background.match(/^#[0-9a-fA-f]{6$/g) ?

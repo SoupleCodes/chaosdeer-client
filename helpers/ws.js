@@ -335,6 +335,13 @@ chaosEvents.doWhenReady(() => {
             } else {
                 handleAppearElement(["ud-lastfm-container"], "hide")
             };
+            function updateButtonTHing(yea) {
+                document.getElementById('block-user-theme').innerText = yea ? 'Unblock user\'s post theme' : 'Block user\'s post theme'
+            }
+            document.getElementById('block-user-theme').onclick = function () {
+                updateButtonTHing(toggle_user_blocked_theme(incoming.user.username))
+            }
+            updateButtonTHing(is_theme_blocked(incoming.user.username))
             switchScene('user-display');
         } else if (last_cmd == "get_ips" && "ips" in incoming) {
             document.getElementById("mm-ips").innerText = incoming.ips.toString().replaceAll(",", "\n");
