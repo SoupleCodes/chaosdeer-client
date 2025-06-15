@@ -342,6 +342,13 @@ function loadPost(resf, isFetch, isInbox) {
     } else {
         postContent.innerText = findandReplaceMentions(resf.content);
     }
+    if(resf.author.profile.background) {
+        const [red, green, blue] = [...resf.author.profile.background.match(/.{2}/g)].map(h => parseInt(h, 16));
+        if ((red*0.299 + green*0.587 + blue*0.114) <= 186)
+            postContent.style.color = "#ffffff"
+        else
+            postContent.style.color = "#000000"
+    }
     post.appendChild(postContent);
 
     if (resf.attachments.length != 0) {
