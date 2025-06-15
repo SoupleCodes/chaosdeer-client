@@ -342,8 +342,11 @@ function loadPost(resf, isFetch, isInbox) {
     } else {
         postContent.innerText = findandReplaceMentions(resf.content);
     }
-    if(resf.author.profile.background) {
-        const [red, green, blue] = [...resf.author.profile.background.match(/.{2}/g)].map(h => parseInt(h, 16));
+    if(resf.author.profile.background && resf.author.profile.background.match(/^#([0-9a-fA-f]{6}|[0-9a-fA-f]{3})$/g)) {
+        const [red, green, blue] = resf.author.profile.background.match(/^#[0-9a-fA-f]{6$/g) ?
+            [...resf.author.profile.background.replace('#','').match(/.{2}/g)].map(h => parseInt(h, 16)) :
+            [...resf.author.profile.background.replace('#','').split('')].map(h => parseInt(h+h, 16));
+        console.log(red, green, blue, resf.author.profile.background)
         if ((red*0.299 + green*0.587 + blue*0.114) <= 186)
             postContent.style.color = "#ffffff"
         else
