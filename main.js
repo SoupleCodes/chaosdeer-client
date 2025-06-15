@@ -265,32 +265,32 @@ function loadPost(resf, isFetch, isInbox) {
 
         var postUsername = document.createElement("span");
         postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
-        if(resf.author.color) {
-            postUsername.querySelector("b").style.color = resf.author.color;
+        if(resf.author.profile.color) {
+            postUsername.querySelector("b").style.color = resf.author.profile.color;
         }
-        if(resf.author.font) {
-            postUsername.querySelector("b").style.fontFamily = resf.author.font;
+        if(resf.author.profile.font) {
+            postUsername.querySelector("b").style.fontFamily = resf.author.profile.font;
         }
-        if(resf.author.background) {
-            post.style.background = resf.author.background; 
+        if(resf.author.profile.background) {
+            post.style.background = resf.author.profile.background; 
         }
-        if(resf.author.weight) {
-            postUsername.querySelector("b").style.fontWeight = resf.author.weight;
+        if(resf.author.profile.weight) {
+            postUsername.querySelector("b").style.fontWeight = resf.author.profile.weight;
         }
-        if(resf.author.shadow) {
-            postUsername.querySelector("b").style.textShadow = resf.author.shadow; 
+        if(resf.author.profile.shadow) {
+            postUsername.querySelector("b").style.textShadow = resf.author.profile.shadow; 
         }
-        if(resf.author["border-top"]) {
-            post.style.borderTop = "1px solid " + resf.author["border-top"];
+        if(resf.author.profile["border-top"]) {
+            post.style.borderTop = "1px solid " + resf.author.profile["border-top"];
         }
-        if(resf.author["border-bottom"]) {
-            post.style.borderBottom = "1px solid " + resf.author["border-bottom"]; 
+        if(resf.author.profile["border-bottom"]) {
+            post.style.borderBottom = "1px solid " + resf.author.profile["border-bottom"]; 
         }
-        if(resf.author["border-left"]) {
-            post.style.borderLeft = "1px solid " + resf.author["border-left"];
+        if(resf.author.profile["border-left"]) {
+            post.style.borderLeft = "1px solid " + resf.author.profile["border-left"];
         }
-        if(resf.author["border-right"]) {
-            post.style.borderRight = "1px solid " + resf.author["border-right"];
+        if(resf.author.profile["border-right"]) {
+            post.style.borderRight = "1px solid " + resf.author.profile["border-right"];
         }
         if (resf.author.bot) {
             postUsername.innerHTML += ' <span title="This user is a robot." class="inline-icon material-symbols-outlined">smart_toy</span>'
