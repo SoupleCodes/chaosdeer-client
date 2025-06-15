@@ -36,6 +36,7 @@ const settings_template = {
     upload_key: "",
     upload_service: "",
     enter_to_send: false, //TODO: implement this
+    custom_post_themes: true,
 }
 
 let settings = JSON.parse(localStorage.getItem("settings"));
@@ -44,6 +45,25 @@ for (const i in settings_template) {
         settings[i] = settings_template[i]
         localStorage.setItem("settings", JSON.stringify(settings))
     }
+}
+
+/** @type {string[]} */
+let theme_blocklist = JSON.parse(localStorage.getItem("theme_blocklist"));
+if (!Array.isArray(theme_blocklist))
+    theme_blocklist = [];
+
+function update_theme_blocklist() {
+    localStorage.setItem('theme_blocklist', JSON.stringify(theme_blocklist))
+}
+
+function block_users_theme(user) {
+    if (!theme_blocklist.includes(user))
+        theme_blocklist.push(user)
+}
+
+function unblock_users_theme(user) {
+    if (theme_blocklist.includes(user))
+        theme_blocklist.splice(theme_blocklist.indexOf(user), 1)
 }
 
 //TODO: more to the bottom bc this happens after all the functions are initialised n stuff
@@ -69,6 +89,10 @@ chaosEvents.addEventListener('ready', () => {
 
     if (localStorage.getItem("settings") == null) {
         localStorage.setItem("settings", JSON.stringify(settings_template))
+    };
+
+    if (localStorage.getItem("theme_blocklist") == null) {
+        localStorage.setItem("theme_blocklist", "[]")
     };
 
     if (localStorage.getItem("last_inbox_id") == null) {
@@ -104,6 +128,11 @@ function stgsTriggers() {
         replace_text = false;
         document.getElementById("mc-button-replace").innerText = "(disabled) Replace text";
     };
+    if (settings.custom_post_themes) {
+        document.getElementById("mc-button-custom-post-themes").innerText = "(enabled) Custom post themes";
+    } else {
+        document.getElementById("mc-button-custom-post-themes").innerText = "(disabled) Custom post themes";
+    }
     //if (settings.detect_file_type) {
         //detect_file_type = true;
         //document.getElementById("mc-button-detectft").innerText = "(enabled) Detect file types";
@@ -129,6 +158,9 @@ function updateStg(setting) {
         case "detect_file_type":
             settings.detect_file_type = !settings.detect_file_type;
             break
+        case "custom_post_themes":
+            settings.custom_post_themes = !settings.custom_post_themes;
+            break;
     }
     localStorage.setItem("settings", JSON.stringify(settings));
     stgsTriggers();
@@ -265,24 +297,26 @@ function loadPost(resf, isFetch, isInbox) {
 
         var postUsername = document.createElement("span");
         postUsername.innerHTML = `<b>${deHTML(resf.author.display_name)}</b> (<span class="mono">@${deHTML(resf.author.username)}</span>)`;
-        if(resf.author.profile.color)
-            postUsername.querySelector("b").style.color = resf.author.profile.color;
-        if(resf.author.profile.font)
-            postUsername.querySelector("b").style.fontFamily = resf.author.profile.font;
-        if(resf.author.profile.background)
-            post.style.background = resf.author.profile.background;
-        if(resf.author.profile.weight)
-            postUsername.querySelector("b").style.fontWeight = resf.author.profile.weight;
-        if(resf.author.profile.shadow)
-            postUsername.querySelector("b").style.textShadow = resf.author.profile.shadow; 
-        if(resf.author.profile["border-top"])
-            post.style.borderTop = "1px solid " + resf.author.profile["border-top"];
-        if(resf.author.profile["border-bottom"])
-            post.style.borderBottom = "1px solid " + resf.author.profile["border-bottom"]; 
-        if(resf.author.profile["border-left"])
-            post.style.borderLeft = "1px solid " + resf.author.profile["border-left"];
-        if(resf.author.profile["border-right"])
-            post.style.borderRight = "1px solid " + resf.author.profile["border-right"];
+        if (settings.custom_post_themes) {
+            if(resf.author.profile.color)
+                postUsername.querySelector("b").style.color = resf.author.profile.color;
+            if(resf.author.profile.font)
+                postUsername.querySelector("b").style.fontFamily = resf.author.profile.font;
+            if(resf.author.profile.background)
+                post.style.background = resf.author.profile.background;
+            if(resf.author.profile.weight)
+                postUsername.querySelector("b").style.fontWeight = resf.author.profile.weight;
+            if(resf.author.profile.shadow)
+                postUsername.querySelector("b").style.textShadow = resf.author.profile.shadow; 
+            if(resf.author.profile["border-top"])
+                post.style.borderTop = "1px solid " + resf.author.profile["border-top"];
+            if(resf.author.profile["border-bottom"])
+                post.style.borderBottom = "1px solid " + resf.author.profile["border-bottom"]; 
+            if(resf.author.profile["border-left"])
+                post.style.borderLeft = "1px solid " + resf.author.profile["border-left"];
+            if(resf.author.profile["border-right"])
+                post.style.borderRight = "1px solid " + resf.author.profile["border-right"];
+        }
         if (resf.author.bot) {
             postUsername.innerHTML += ' <span title="This user is a robot." class="inline-icon material-symbols-outlined">smart_toy</span>'
         };
@@ -342,7 +376,9 @@ function loadPost(resf, isFetch, isInbox) {
     } else {
         postContent.innerText = findandReplaceMentions(resf.content);
     }
-    if(resf.author.profile.background && resf.author.profile.background.match(/^#([0-9a-fA-f]{6}|[0-9a-fA-f]{3})$/g)) {
+    if (settings.custom_post_themes &&
+        resf.author.profile.background &&
+        resf.author.profile.background.match(/^#([0-9a-fA-f]{6}|[0-9a-fA-f]{3})$/g)) {
         const [red, green, blue] = resf.author.profile.background.match(/^#[0-9a-fA-f]{6$/g) ?
             [...resf.author.profile.background.replace('#','').match(/.{2}/g)].map(h => parseInt(h, 16)) :
             [...resf.author.profile.background.replace('#','').split('')].map(h => parseInt(h+h, 16));
