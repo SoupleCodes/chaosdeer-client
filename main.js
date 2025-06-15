@@ -66,6 +66,10 @@ function unblock_users_theme(user) {
         theme_blocklist.splice(theme_blocklist.indexOf(user), 1)
 }
 
+function is_theme_blocked(user) {
+    return theme_blocklist.includes(user)
+}
+
 //TODO: more to the bottom bc this happens after all the functions are initialised n stuff
 chaosEvents.addEventListener('ready', () => {
     document.addEventListener('keydown', (e) => {
