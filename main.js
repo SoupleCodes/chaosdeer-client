@@ -58,12 +58,14 @@ function update_theme_blocklist() {
 
 function block_users_theme(user) {
     if (!theme_blocklist.includes(user))
-        theme_blocklist.push(user)
+        theme_blocklist.push(user);
+    toggle_user_blocked_theme()
 }
 
 function unblock_users_theme(user) {
     if (theme_blocklist.includes(user))
-        theme_blocklist.splice(theme_blocklist.indexOf(user), 1)
+        theme_blocklist.splice(theme_blocklist.indexOf(user), 1);
+    toggle_user_blocked_theme()
 }
 
 function is_theme_blocked(user) {
