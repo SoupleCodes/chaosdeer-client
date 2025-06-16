@@ -156,6 +156,10 @@ blockquote {
     border: 1px solid;
     box-shadow: 0 0 2px 1.5px #00000091;
 }
+.post-deleted {
+    background: transparent !important;
+    border: none !important
+}
 .mono {
     font-family: monospace;
 }

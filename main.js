@@ -353,7 +353,7 @@ function loadPost(resf, isFetch, isInbox) {
         postDetails.querySelector("b").textContent = '@' + resf.author;
         postDetails.querySelector("b").setAttribute("onclick", `showUser('${resf.author}');`);
     } else {
-        postDetails.innerHTML = `${sts} - <span class="text-clickable" onclick="editpost('${resf._id}');">Edit</span>`;
+        postDetails.innerHTML = `${sts} - <span class="text-clickable" onclick="reply('${resf._id}');">Reply</span>`;
         if (resf.author.username == username) {
             postDetails.innerHTML += ` - <span class="text-clickable" onclick="editer('${resf._id}');">Edit</span>`
         }
@@ -494,6 +494,7 @@ function editer(id) {
 function removepost(id, dba) {
     try {
         document.getElementById(id).classList.remove("post");
+        document.getElementById(id).classList.add("post-deleted");
         if (dba) {
             document.getElementById(id).innerHTML = "<small class='reply' style='vertical-align:top;'><i>post deleted by author</i></small>";
         } else {
