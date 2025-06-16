@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Font */
+@font-face {
+    font-family: w95;
+    src: url('https://files.catbox.moe/hwyfjx.otf');
+}
+
+@font-face {
+    font-family: w95;
+    src: url('https://files.catbox.moe/764x9a.otf');
+    font-weight: bold;
+}
+
 body {
     font-family: 'Noto Sans', sans-serif;
     margin: 0px;
@@ -143,6 +155,10 @@ blockquote {
     margin-top: 2px;
     border: 1px solid;
     box-shadow: 0 0 2px 1.5px #00000091;
+}
+.post-deleted {
+    background: transparent !important;
+    border: none !important
 }
 .mono {
     font-family: monospace;
