@@ -349,7 +349,9 @@ function loadPost(resf, isFetch, isInbox) {
 
     var postDetails = document.createElement("small");
     if (isInbox) {
-        postDetails.innerHTML = `${sts}`;
+        postDetails.innerHTML = `<b class="clickable" onclick=''></b> - ${sts}`;
+        postDetails.querySelector("b").textContent = '@' + resf.author;
+        postDetails.querySelector("b").setAttribute("onclick", `showUser('${resf.author}');`);
     } else {
         postDetails.innerHTML = `${sts} - <span class="text-clickable" onclick="editpost('${resf._id}');">Edit</span>`;
         if (resf.author.username == username) {
