@@ -288,6 +288,11 @@ function logOut() {
     window.location.reload();
 };
 
+function ping(user) {
+    var content = document.getElementById("ms-msg");
+    content.value = '@' + user + " " + content.value
+}
+
 function loadPost(resf, isFetch, isInbox) {
     if (settings.debug) { console.log("Loading post " + resf._id) };
     var sts = new Date(resf.created * 1000).toLocaleString();
@@ -346,13 +351,14 @@ function loadPost(resf, isFetch, isInbox) {
     if (isInbox) {
         postDetails.innerHTML = `${sts}`;
     } else {
-        postDetails.innerHTML = `${sts} - <span class="text-clickable" onclick="reply('${resf._id}');">Reply</span>`;
+        postDetails.innerHTML = `${sts} - <span class="text-clickable" onclick="editpost('${resf._id}');">Edit</span>`;
         if (resf.author.username == username) {
             postDetails.innerHTML += ` - <span class="text-clickable" onclick="editer('${resf._id}');">Edit</span>`
         }
         if (resf.author.username == username || delete_all) {
             postDetails.innerHTML += ` - <span class="text-clickable" onclick="if (confirm('delete post?')) {deletepost('${resf._id}');};">Delete</span>`
         }
+        postDetails.innerHTML += ` - <span class="text-clickable" onclick="ping('${resf.author.username}');">Ping</span>`
     };
     post.appendChild(postDetails);
     

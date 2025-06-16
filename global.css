@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Font */
+@font-face {
+    font-family: w95;
+    src: url('https://files.catbox.moe/hwyfjx.otf');
+}
+
+@font-face {
+    font-family: w95;
+    src: url('https://files.catbox.moe/764x9a.otf');
+    font-weight: bold;
+}
+
 body {
     font-family: 'Noto Sans', sans-serif;
     margin: 0px;
