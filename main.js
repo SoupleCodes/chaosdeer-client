@@ -29,15 +29,16 @@ let themes = {
     "cosmic-latte": "Cosmic Latte"
 }
 
-const settings_template = {
-    replace_text: true,
-    detect_file_type: false,
-    debug: true,
-    upload_key: "",
-    upload_service: "",
-    enter_to_send: false, //TODO: implement this
-    custom_post_themes: true,
-}
+// moved to index.html
+// const settings_template = {
+//     replace_text: true,
+//     detect_file_type: false,
+//     debug: true,
+//     upload_key: "",
+//     upload_service: "",
+//     enter_to_send: false, //TODO: implement this
+//     custom_post_themes: true,
+// }
 
 let settings = JSON.parse(localStorage.getItem("settings"));
 for (const i in settings_template) {
@@ -100,10 +101,6 @@ chaosEvents.addEventListener('ready', () => {
         document.getElementById("custom-style").innerText = localStorage.getItem("customCSS");
         document.getElementById("mc-theme-custom").value = localStorage.getItem("customCSS");
     }
-
-    if (localStorage.getItem("settings") == null) {
-        localStorage.setItem("settings", JSON.stringify(settings_template))
-    };
 
     if (localStorage.getItem("theme_blocklist") == null) {
         localStorage.setItem("theme_blocklist", "[]")
