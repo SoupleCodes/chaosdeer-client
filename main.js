@@ -421,7 +421,7 @@ function loadPost(resf, isFetch, isInbox) {
                 let reaction = document.createElement("div");
                 reaction.classList.add("reaction");
                 reaction.classList.add("clickable");
-                reaction.innerText = r + " " + reactions[r];
+                reaction.innerText = r + " " + reactions[r].length;
                 reactionsElement.appendChild(reaction);
             })
             post.appendChild(reactionsElement);
