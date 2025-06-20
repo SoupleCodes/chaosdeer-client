@@ -385,6 +385,16 @@ hr {
 .post {
     background-color: var(--deer-button-hover);
 }
+.reactions { display: flex; }
+.reaction {
+    background: #0000003b;
+    width: fit-content;
+    height: 23px;
+    box-shadow: inset 0px 1px 3px black;
+    border-bottom: 1px solid #ffffff4f;
+    padding: 2px 4px;
+    margin: 3px;
+}
 .pfp {
     border: 1px var(--deer-image-border) solid;
 }
