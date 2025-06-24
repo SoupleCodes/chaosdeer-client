@@ -397,12 +397,15 @@ function loadPost(resf, isFetch, isInbox) {
     }
     if (!isInbox && settings.custom_post_themes &&
         !is_theme_blocked(resf.author.username) &&
-        resf.author.profile.background &&
-        resf.author.profile.background.match(/^#([0-9a-fA-f]{6}|[0-9a-fA-f]{3})$/g)) {
-        const [red, green, blue] = resf.author.profile.background.match(/^#[0-9a-fA-f]{6$/g) ?
-            [...resf.author.profile.background.replace('#','').match(/.{2}/g)].map(h => parseInt(h, 16)) :
-            [...resf.author.profile.background.replace('#','').split('')].map(h => parseInt(h+h, 16));
-        console.log(red, green, blue, resf.author.profile.background)
+        (resf.author.profile.background &&
+        resf.author.profile.background.match(/^#([0-9a-fA-f]{6}|[0-9a-fA-f]{3})$/g)
+        || resf.author.profile['background-alt'])) {
+        const bg = (resf.author.profile['background-alt'] || resf.author.profile.background);
+        const [red, green, blue] =
+            bg.match(/^#[0-9a-fA-f]{6$/g) ?
+            [...bg.replace('#','').match(/.{2}/g)].map(h => parseInt(h, 16)) :
+            [...bg.replace('#','').split('')].map(h => parseInt(h+h, 16));
+        console.log(red, green, blue, (resf.author.profile['background-alt'] || resf.author.profile.background))
         if ((red*0.299 + green*0.587 + blue*0.114) <= 186)
             postContent.style.color = "#ffffff"
         else

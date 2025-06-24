@@ -511,6 +511,12 @@ function setPostBackground() {
     clearValueOf(["mc-post-background"])
 };
 
+function setPostAltBg() {
+    last_cmd = "set_post_background_alt";
+    ws.send(JSON.stringify({command: "set_property", property: "background-alt", value: document.getElementById("mc-post-alt-bg").value}))
+    clearValueOf(["mc-post-alt-bg"])
+}
+
 function setPostBorderBottom() {
     last_cmd = "set_post_border_bottom";
     ws.send(JSON.stringify({command: "set_property", property: "border_bottom", value: document.getElementById("mc-post-border-bottom").value}))
