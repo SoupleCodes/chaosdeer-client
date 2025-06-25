@@ -170,7 +170,7 @@ chaosEvents.doWhenReady(() => {
                 }
             }
             if (incoming.version != serverVersion) {
-                displayError(`The server is on a newer version than this version of BossDeer was designed for. You may experience problems. (Expected "${serverVersion}", got "${incoming.version}")`);
+                displayError(`The server is on a newer version than this version of Soupdeer was designed for. You may experience problems. (Expected "${serverVersion}", got "${incoming.version}")`);
             };
             ulist = Object.keys(incoming.ulist);
             raw_ulist = incoming.ulist;
@@ -187,7 +187,7 @@ chaosEvents.doWhenReady(() => {
             } else {
                 username = localStorage.getItem("username").toLowerCase();
                 last_cmd = "login_token";
-                ws.send(JSON.stringify({command: "login_token", token: localStorage.getItem("token"), client: `BossDeer ${version}`}))
+                ws.send(JSON.stringify({command: "login_token", token: localStorage.getItem("token"), client: `Soupdeer ${version}`}))
             };
         } else if (incoming.command == "ulist") {
             ulist = Object.keys(incoming.ulist);
@@ -405,7 +405,7 @@ function register() {
 function logIn() {
     last_cmd = "login_pswd";
     username = document.getElementById("rl-username").value.toLowerCase();
-    ws.send(JSON.stringify({command: "login_pswd", username: username, password: document.getElementById("rl-password").value, client: `BossDeer ${version}`, listener: "RegisterLoginPswdListener"}))
+    ws.send(JSON.stringify({command: "login_pswd", username: username, password: document.getElementById("rl-password").value, client: `Soupdeer ${version}`, listener: "RegisterLoginPswdListener"}))
 };
 
 function ping() {

@@ -15,8 +15,8 @@ const md = markdownit({
   })
   .disable('image');
   
-const version = "1.7.6b";
-const serverVersion = "Helium-1.0.1a";
+const version = "1.8.0a";
+const serverVersion = "Vulcan-1.0.0a";
 
 let shift = false;
 let detect_file_type = false;
