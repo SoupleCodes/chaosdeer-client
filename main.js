@@ -14,7 +14,7 @@ const md = markdownit("default", {
     breaks: true,
   })
   .use(markdownitMark)
-  .use(markdownitKaTeX);
+  .use(markdownitKaTeX, { throwOnError: false });
 //   .disable('image');
   
 const version = "1.8.0b";
