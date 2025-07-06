@@ -21,3 +21,10 @@ Markdown can now be entered in bios!
 
 ### And more!
 I forgot
+
+## Version 1.8.0b
+
+- $\LaTeX$ support
+- ==<mark>== support
+- inbox posts now render markdown
+- inline images

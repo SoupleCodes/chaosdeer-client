@@ -29,6 +29,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.css">
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-mark@4.0.0/dist/markdown-it-mark.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+    <script>
+        globalThis.require = () => {
+            return katex
+        }
+        globalThis.module = {}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-katex@2.0.3/index.min.js"></script>
+    <script>
+        globalThis.markdownitKaTeX = globalThis.module.exports
+    </script>
     
     <script defer>
         //TODO: plugin api based on this thingymabob (so that plugins wont have to edit the functions)

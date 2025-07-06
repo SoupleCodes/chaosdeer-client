@@ -1,4 +1,4 @@
-const md = markdownit({
+const md = markdownit("default", {
     highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try {
@@ -13,9 +13,11 @@ const md = markdownit({
     typographer: false,
     breaks: true,
   })
-  .disable('image');
+  .use(markdownitMark)
+  .use(markdownitKaTeX);
+//   .disable('image');
   
-const version = "1.8.0a";
+const version = "1.8.0b";
 const serverVersion = "Vulcan-1.0.0a";
 
 let shift = false;
@@ -28,6 +30,13 @@ let themes = {
     "bright": "Bright",
     "cosmic-latte": "Cosmic Latte"
 }
+
+const IMAGE_HOST_WHITELIST = ["u.cubeupload.com", "files.catbox.moe",
+    "litter.catbox.moe", "i.ibb.co", "cubeupload.com", "media.tenor.com",
+    "tenor.com", "c.tenor.com", "meower.fraudulent.loan", "soktdeer.com",
+    "boss.soktdeer.com", "static.darflen.com", "eris.pages.dev",
+    "gaysexonline.net", "gaysexonline.pl"
+]
 
 // moved to index.html
 // const settings_template = {
@@ -119,7 +128,7 @@ chaosEvents.addEventListener('ready', () => {
     fetch('changelog.md')
         .then(response => response.text())
         .then(markdownContent => {
-            document.getElementById("mw-new").innerHTML = md.render(markdownContent);
+            document.getElementById("mw-new").innerHTML = md.render(markdownContent, {});
         })
         .catch(error => {
             console.error('Error fetching changelog:', error);
@@ -389,8 +398,46 @@ function loadPost(resf, isFetch, isInbox) {
     var postContent = document.createElement("div");
     postContent.classList.add("post-content");
     postContent.setAttribute("id", "content-" + resf._id)
-    if (!isInbox) {
-        postContent.innerHTML = md.render(resf.content);
+    if (true) {
+        const tokens = md.parse(resf.content, {});
+        for (const token of tokens) {
+            if (token.children) {
+                for (const childToken of token.children) {
+                    if (childToken.type === "image") {
+                        const srcPos = childToken.attrs.findIndex(
+                            attr => attr[0] === "src"
+                        );
+                        if (
+                            !IMAGE_HOST_WHITELIST.some(o => {
+                                    try {
+                                        const url = new URL(childToken.attrs[srcPos][1])
+                                        return url.host == o
+                                    } catch (error) {
+                                        
+                                    }
+                                }
+                            )
+                        ) {
+                            console.log(childToken, IMAGE_HOST_WHITELIST, childToken.attrs[srcPos][1]);
+                            childToken.attrs[srcPos][1] = "about:blank";
+                        }
+                    }
+                    if (childToken.type === "link_open") {
+                        const href = childToken.attrs.find(
+                            attr => attr[0] === "href"
+                        )[1];
+                        const b64href = btoa(href);
+                        childToken.attrs.push([
+                            "onclick",
+                            `return confirmLink('${b64href}')`,
+                        ]);
+                    }
+                }
+            }
+        }
+        const content = md.renderer.render(tokens, md.options, {});
+        // postContent.innerHTML = md.render(resf.content);
+        postContent.innerHTML = content;
         postContent.innerHTML = findandReplaceMentions(postContent.innerHTML);
     } else {
         postContent.innerText = findandReplaceMentions(resf.content);
@@ -509,7 +556,7 @@ function removepost(id, dba) {
 
 function editedpost(id, content) {
     try {
-        document.getElementById("content-" + id).innerHTML = md.render(content);
+        document.getElementById("content-" + id).innerHTML = md.render(content, {});
         if (id in posts) {
             posts[id].content = content;
             var repliesMade = document.getElementsByClassName("reply-" + id);
