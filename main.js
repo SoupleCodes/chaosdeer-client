@@ -460,6 +460,24 @@ function loadPost(resf, isFetch, isInbox) {
     }
     post.appendChild(postContent);
 
+    if(!isInbox) {
+        const reactions = resf.reactions
+        console.log(reactions, reactions.length > 0)
+        if(Object.keys(reactions).length > 0) {
+            var reactionsElement = document.createElement("div");
+            reactionsElement.classList.add("reactions");
+
+            Object.keys(reactions).map(r => {
+                let reaction = document.createElement("div");
+                reaction.classList.add("reaction");
+                reaction.classList.add("clickable");
+                reaction.innerText = r + " " + reactions[r].length;
+                reactionsElement.appendChild(reaction);
+            })
+            post.appendChild(reactionsElement);
+        }
+    }
+
     if (resf.attachments.length != 0) {
         var horline = document.createElement("hr");
         post.appendChild(horline);
