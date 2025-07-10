@@ -21,3 +21,20 @@ Markdown can now be entered in bios!
 
 ### And more!
 I forgot
+
+## Version 1.8.0a
+
+- profile css
+- post theme customization
+- disabling users' post and profile themes
+- contrast thingy for hex code post backgrounds
+- prolly more (i forgor :skull:)
+
+## Version 1.8.0b
+
+- $\LaTeX$ support
+- ==<mark>== support
+- inbox posts now render markdown
+- inline images
+- background-alt
+- contrast thingy for background-alt
