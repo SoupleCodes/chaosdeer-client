@@ -3,7 +3,16 @@ let requested = false
 let lePinged = false;
 let pings = 0;
 
+// wait we still do it this way?
 function handlePings() {
+    // adios
+    const audios = {
+        ping: document.createElement('audio'),
+        message: document.createElement('audio'),
+    }
+
+    audios.message.src = '/assets/message.mp3';
+    audios.ping.src = 'https://files.catbox.moe/62fie9.wav';
     window.actuallyLoadPost = loadPost;
 
     Notification.requestPermission().then((result) => {
@@ -38,14 +47,11 @@ function handlePings() {
             lePinged = true;
             pings++;
 
-            const audio = document.createElement('audio');
-            document.title = `(${pings}) chaosdeer`
-            audio.src = 'https://files.catbox.moe/62fie9.wav'
-            audio.play();
+            audios.ping.play();
 
             if (notifPerms == 'granted')
                 new Notification(resf?.author.display_name ?? resf?.author.username, { body: resf.content, icon: resf.author.avatar ?? "/assets/default.png" });
-        }
+        } else audios.message.play();
         actuallyLoadPost(resf, isFetch, isInbox);
     }
 }
