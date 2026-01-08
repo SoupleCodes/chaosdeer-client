@@ -39,6 +39,13 @@ function handlePings() {
         document.title = 'chaosdeer'
     })
 
+    setInterval(() => {
+    	if (!lePinged) return;
+    	pings = 0;
+    	lePinged = false;
+        document.title = 'chaosdeer'
+    }, 10_0000)
+
     loadPost = function (resf, isFetch, isInbox) {
         if (isFetch) return actuallyLoadPost(resf, isFetch, isInbox);
 		if (document.hasFocus()) return actuallyLoadPost(resf, isFetch, isInbox);; // do not the ping if focused
