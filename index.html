@@ -233,7 +233,7 @@
                                         <div onclick="pickColor(this)" class="swatch" data-color="#50CEEA" style="background:#50CEEA"></div>
                                         <input data-color="#000000" onclick="pickColor(this)" onchange="this.setAttribute('data-color',this.value)" class="swatch selected" type="color">
                                     </span>
-                                <small><a onclick="return false;">Set background image (.?)</a></small></div>
+                                <small><a onclick="var url=window.prompt('Set URL of background image');this.nextElementSibling.value=url;update('background')">Set background image (.?)</a><input id="mc-set-background" class="hidden"></small></div>
                             </div>
                             <div class="list-item">
                                 <div class="list-title">CSS</div>

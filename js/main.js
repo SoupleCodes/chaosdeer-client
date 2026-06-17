@@ -319,7 +319,12 @@ function savePreferences() {
                     val = document.getElementById("mc-banner-url").value
                     break;
                 case 'background':
-                    val = document.querySelector('#mc-post-background .swatch.selected').getAttribute("data-color")
+                    try {
+                        var url = new URL((document.getElementById("mc-set-background").value).split("url(''")[0].split(")")[0]);
+                        val = "url(" + url + ")"
+                      } catch (_) {
+                        val = document.querySelector('#mc-post-background .swatch.selected').getAttribute("data-color")
+                    }
                     break;
                 case 'css':
                     val = document.getElementById("mc-profile-custom").value

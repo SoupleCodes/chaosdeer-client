@@ -121,14 +121,21 @@ function fillFormData(u) {
   setInnContentOfEl("mc-display-weight", u.profile.weight || "Normal")
   setInnContentOfEl("mc-avatar-url", u.avatar)
   setInnContentOfEl("mc-banner-url", u.banner)
-  
-  var targetSwatch = document.querySelector('.swatch[data-color="' + u.profile.color + '"]')
+
+  try {
+    var url = new URL((u.profile.background).split("url(''")[0].split(")")[0]);
+    setInnContentOfEl("mc-set-background", u.profile.background)
+    } catch (_) {
+      val = document.querySelector('#mc-post-background .swatch.selected').getAttribute("data-color")
+  }
+
+  var targetSwatch = document.querySelector('#mc-display-color .swatch[data-color="' + u.profile.color + '"]')
   if (targetSwatch) {
     targetSwatch.classList.add("selected")
   } else {
     document.querySelector('input.swatch').classList.add("selected")
   }
-  document.querySelector('input.swatch').value = u.profile.color
+  document.querySelector('#mc-display-color input.swatch').value = u.profile.color
 
   if (u.avatar) document.querySelectorAll('#settings-profile img')[0].src = u.avatar
   if (u.banner) document.querySelectorAll('#settings-profile img')[1].src = u.banner

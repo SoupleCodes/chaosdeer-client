@@ -114,6 +114,7 @@ button:hover {
     width: 75%;
     height: 75%;
     background: white;
+    background: var(--main-color);
     overflow: hidden;
     box-shadow: 0 0 5px #00000094;
     opacity: 0;
