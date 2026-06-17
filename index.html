@@ -1,88 +1,357 @@
 <!DOCTYPE html>
-<html lang="en-UK">
+<html lang="en-US">
 
 <head>
-    <title>chaosdeer</title>
+    <title>chaossoup</title>
     <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="apple-touch-icon" type="image/png" href="/assets/icon256.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="/assets/icon256.png">
-    <meta rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/icons.css" />
-    <link rel="stylesheet" href="/global.css?92109" />
-    <link id="top-style" rel="stylesheet" href="/themes/helium.css" />
-    <style id="custom-style"></style>
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="stylesheet" href="/global.css">
+    <link id="site-theme" rel="stylesheet" href="/themes/coffee.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js" defer></script>
+    <script type="text/javascript" src="/js/helper.js" defer></script>
+    <script type="text/javascript" src="/js/ws.js" defer></script>
+    <script type="text/javascript" src="/js/main.js" defer></script>
+    <script type="text/javascript" src="/js/ping.js" defer></script>
 </head>
 
-<body>
-    <div id="error-bar">
-        <span onclick="closePopup();" class="text-clickable">Close</span> - <span id="error-text">Connecting...<span>
+<body onresize="var b=document.body;b.classList.add('nosmooth');el=document.querySelector('#bottombar a.selected');scrollTopage(el.getAttribute('onclick').substring(13, 14), el);b.classList.remove('nosmooth')">
+    <style id="additional-styles">
+        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+    </style>
+    <style id="custom-styles" onload="if (typeof settings_template !== 'undefined')this.disabled=!settings_template.post_themes"></style>
+    <div id="notifications" style="left:-315px;top:0px">
     </div>
     <div id="main">
-        <div id="loading">
-            <center>Taking too long to load? Try <span onclick="logOut();" class="text-clickable">a full reset</span>.
-            </center>
+        <div id="navbar">
+            <div id="topbar">
+                <div id="logo-container">
+                    <img src="/images/logo.png" width="107" height="25" />
+                </div>
+                <div id="rightnav">
+                    <a id="nav-join" href="#" onclick="openJoinPopup()">Join</a>
+                    <a id="nav-login" href="#" onclick="openLoginPopup()">Login</a>
+                </div>
+            </div>
+            <div id="bottombar">
+                <a class="selected" onclick="scrollTopage(0,this)">Home</a>
+                <a onclick="toggleViewInbox()">Inbox<!-- <span class="inbox-count">90</span> --></a>
+                <a onclick="scrollTopage(1,this)">Livechat</a>
+                <a class="hidden" id="btn-moderation" onclick="scrollTopage(2,this)">Moderation</a>
+                <a onclick="scrollTopage(3,this)">Settings</a>
+            </div>
+        </div>
+        <div id="content" style="left:0px">
+            <div id="home" class="main-content">
+                <div id="ulist">
+                    <div id="ulist-text">
+                        <img src="/images/user_icon.png" /><span id="user-count"></span>
+                    </div>
+                    <div id="ulist-list"></div>
+                </div>
+                <div id="text-editor" class="hidden">
+                    <textarea></textarea>
+                    <div id="additional-options" class="row">
+                        <div id="markdown">
+                            <span onclick="markdown(this,'bold')"><img src="https://souplecodes.github.io/old-furrchat/assets/markdown/B.png"></span>
+                            <span onclick="openEmojiPicker(this)"><img src="https://souplecodes.github.io/old-furrchat/assets/markdown/E.png"></span>
+                            <span onclick="addAttachment('home')"><img src="https://souplecodes.github.io/old-furrchat/assets/markdown/Z.png"></span>
+                        </div>
+                        <button onclick="sendPost()">Post</button>
+                    </div>
+                </div>
+                <small id="home-reply-details" class="reply-details"></small>
+                <small id="home-attachment-details" class="attachment-details"></small>
+                <div id="home-posts"></div>
+            </div>
+            <div id="livechat" class="main-content">
+                <div id="livechat-ulist">
+                    <div id="livechat-ulist-text">
+                        <img src="/images/user_icon.png" /><span id="livechat-user-count"></span>
+                    </div>
+                    <div id="livechat-ulist-list"></div>
+                </div>
+                <div id="livechat-text-editor" class="hidden">
+                    <textarea></textarea>
+                    <div id="additional-options" class="row">
+                        <div id="markdown">
+                            <span onclick="markdown(this,'bold')"><img src="https://souplecodes.github.io/old-furrchat/assets/markdown/B.png"></span>
+                            <span onclick="openEmojiPicker(this)"><img src="https://souplecodes.github.io/old-furrchat/assets/markdown/E.png"></span>
+                            <span onclick="addAttachment('livechat')"><img src="https://souplecodes.github.io/old-furrchat/assets/markdown/Z.png"></span>
+                        </div>
+                        <button onclick="sendPost('livechat')">Post</button>
+                    </div>
+                </div>
+                <small id="livechat-attachment-details" class="attachment-details"></small>
+                <div id="livechat-posts"></div>
+            </div>
+            <div id="moderation" class="main-content invisible">
+                <fieldset id="md-ban">
+                    <legend>Ban</legend>
+                    <input id="mm-username-ban" placeholder="Username..." type="text">
+                    <input id="mm-until-ban" type="datetime-local">
+                    <input type="text" id="mm-reason-ban" placeholder="Reason...">
+                    <button onclick="modAction('ban')">Ban User</button>
+                </fieldset>
+                <fieldset id="md-forcekick">
+                    <legend>Forcekick</legend>
+                    <input placeholder="Username..." type="text" id="mm-username-forcekick">
+                    <button onclick="modAction('forcekick')">Forcekick</button>
+                </fieldset>
+                <fieldset id="md-inbox">
+                    <legend>Send to inbox</legend>
+                    <textarea id="mm-content-inbox"></textarea>
+                    <button onclick="modAction('send_inbox')">Post inbox message</button>
+                </fieldset>
+                <fieldset id="md-getips">
+                    <legend>User IPs</legend>
+                    <input placeholder="Username..." type="text" id="mm-username-ip">
+                    <button onclick="clearValueOf(['mm-ips'])">Clear</button>
+                    <button onclick="modAction('get_ips')">Get recent IPs</button>
+                    <div id="mm-ips"></div>
+                </fieldset>
+                <fieldset id="md-block-ip">
+                    <legend>Block IP</legend>
+                    <input placeholder="IP..." type="text" id="mm-ip-block">
+                    <button onclick="modAction('block_ip')">Block IP</button>
+                </fieldset>
+            </div>
+            <div id="settings" class="main-content">
+                <div id="tabs-settings" class="tabs">
+                    <div class="tab selected">Profile</div>
+                    <div class="tab">Theme</div>
+                    <div class="tab">Miscellaneous</div>
+                    <div class="tab">Dangerous</div>
+                </div>
+                <div id="tabs-settings-content" class="tabs-content">
+                    <div id="settings-profile" class="tab-content">
+                        <h3>My profile</h3>
+                        <button onclick="savePreferences()">Update</button>
+                        <small>Customise how your profile page will look like.</small>
+                        <div class="settings-preferences table">
+                            <div class="list-item">
+                                <div class="list-title">Display name</div>
+                                <div class="list-content"><input oninput="update('display_name')" id="mc-display-name" type="text"></div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Bio</div>
+                                <div class="list-content"><textarea oninput="update('bio')" id="mc-bio"></textarea></div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Display name color</div>
+                                <div class="list-content">
+                                    <span id="mc-display-color" class="row">
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#F67280" style="background:#F67280"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#FFA563" style="background:#FFA563"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#E8BB50" style="background:#E8BB50"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#6CD883" style="background:#6CD883"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#736FFA" style="background:#736FFA"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#50CEEA" style="background:#50CEEA"></div>
+                                        <input data-color="#000000" onclick="pickColor(this)" onchange="this.setAttribute('data-color',this.value)" class="swatch" type="color">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Display name font<br><small>Some fonts may not display properly in other devices</small></div>
+                                <div class="list-content">
+                                    <select onchange="this.style.fontFamily=this.value;document.getElementById('mc-display-weight').style.fontFamily=this.value;update('font')" id="mc-display-font" name="mc-display-font">
+                                        <option value="Arial">Arial</option>
+                                        <option value="Arial Black">Arial Black</option>
+                                        <option value="Calibri">Calibri</option>
+                                        <option value="Gill Sans">Gill Sans</option>
+                                        <option value="Helvetica">Helvetica</option>
+                                        <option value="Impact">Impact</option>
+                                        <option value="Lucida Grande">Lucida Grande</option>
+                                        <option value="Optima">Optima</option>
+                                        <option value="Tahoma">Tahoma</option>
+                                        <option value="Trebuchet MS">Trebuchet MS</option>
+                                        <option value="Verdana">Verdana</option>
+                                        <option value="American Typewriter">American Typewriter</option>
+                                        <option value="Baskerville">Baskerville</option>
+                                        <option value="Garamond">Garamond</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Palatino">Palatino</option>
+                                        <option value="Sans-serif">Sans-serif</option>
+                                        <option value="Serif">Serif</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Courier">Courier</option>
+                                        <option value="Courier New">Courier New</option>
+                                        <option value="Monaco">Monaco</option>
+                                        <option value="Bradley Hand">Bradley Hand</option>
+                                        <option value="Comic Sans MS">Comic Sans MS</option>
+                                        <option value="cursive">cursive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Display name weight<br><small>Some weights may not display properly in other fonts</small></div>
+                                <div class="list-content">
+                                    <select onchange="this.style.fontWeight=this.value;update('weight')" id="mc-display-weight" name="mc-display-weight">
+                                        <option value="100">Thin</option>
+                                        <option value="200">Extra Light</option>
+                                        <option value="300">Light</option>
+                                        <option value="400" selected>Normal</option>
+                                        <option value="500">Medium</option>
+                                        <option value="600">Semi Bold</option>
+                                        <option value="700">Bold</option>
+                                        <option value="800">Extra Bold</option>
+                                        <option value="900">Black</option>
+                                        <option value="950">Extra Black</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Avatar url</div>
+                                <div class="list-content">
+                                    <input oninput="this.nextElementSibling.querySelector('img').src=this.value;update('avatar')" id="mc-avatar-url" type="text">
+                                    <div class="img-preview">
+                                        <p>Preview:</p>
+                                        <img src=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Banner url</div>
+                                <div class="list-content">
+                                    <input oninput="this.nextElementSibling.querySelector('img').src=this.value;update('banner')" id="mc-banner-url" type="text">
+                                    <div class="img-preview">
+                                        <p>Preview:</p>
+                                        <img src=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Post background</div>
+                                <div class="list-content">
+                                    <span id="mc-post-background" class="row">
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#F67280" style="background:#F67280"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#FFA563" style="background:#FFA563"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#E8BB50" style="background:#E8BB50"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#6CD883" style="background:#6CD883"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#736FFA" style="background:#736FFA"></div>
+                                        <div onclick="pickColor(this)" class="swatch" data-color="#50CEEA" style="background:#50CEEA"></div>
+                                        <input data-color="#000000" onclick="pickColor(this)" onchange="this.setAttribute('data-color',this.value)" class="swatch selected" type="color">
+                                    </span>
+                                <small><a onclick="return false;">Set background image (.?)</a></small></div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">CSS</div>
+                                <div class="list-content">
+                                    <textarea oninput="update('css')" id="mc-profile-custom"></textarea>
+                                    <small><a onclick="return false;">Preview</a></small>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Last.fm integration <a title="Your lastfm account username" onclick="return false;">(.?)</a></div>
+                                <div class="list-content"><input oninput="update('lastfm')" id="mc-lastfm" type="text"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="settings-theme" class="tab-content">
+                        <h3>Website theme</h3>
+                        <small>Change how the website will look.</small>
+                        <div id="themes">
+                            <div class="theme selected" onclick="pickTheme(this)"><iframe class="theme-preview" src="/theme.html" data-style="coffee"></iframe></div>
+                            <div class="theme" onclick="pickTheme(this)"><iframe class="theme-preview" src="/theme.html" data-style="strawberry"></iframe></div>
+                            <div class="theme" onclick="pickTheme(this)"><iframe class="theme-preview" src="/theme.html" data-style="carbon"></iframe></div>
+                            <div class="theme" onclick="pickTheme(this)"><iframe class="theme-preview" src="/theme.html" data-style="pineapple"></iframe></div>
+                        </div>
+                        <div class="settings-preferences table">
+                            <div class="list-item">
+                                <div class="list-title">Custom</div>
+                                <div class="list-content">
+                                    <textarea id="mc-custom-site-css"></textarea>
+                                    <button onclick="saveCustom()">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="settings-miscellaneous" class="tab-content">
+                        <h3>Uploads</h3>
+                        <small>Set the key and service to enable uploading images</small>
+                        <div class="settings-preferences table">
+                            <div class="list-item">
+                                <div class="list-title">Upload</div>
+                                <div class="list-content">
+                                    <select name="mc-upload-service" id="mc-upload-service">
+                                        <option value="imgbb">ImgBB</option>
+                                        <option value="fraud">Fraudulent Uploads</option>
+                                    </select>
+                                    <input id="mc-upload-key" placeholder="Service key..." autocomplete="off" type="text" maxlength="128">
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Other</h3>
+                        <div class="column">
+                            <label>
+                                <input id="check-post-themes" type="checkbox" onclick="changeSetting('post_themes',this.checked)">
+                                <small>Enable custom post themes</small>
+                            </label>
+                            <label>
+                                <input id="check-replace-text" type="checkbox" onclick="changeSetting('replace_text',this.checked)">
+                                <small>Replace text</small>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="settings-dangerous" class="tab-content">
+                        <h3>Dangerous</h3>
+                        <small>Some functions have not yet been re-implemented into SoktDeer Helium.</small>
+                        <div class="settings-preferences table">
+                            <div class="list-item">
+                                <div class="list-title">Change password<br><small>Be careful!</small></div>
+                                <div class="list-content">
+                                    <input id="mc-password" type="password" placeholder="Current password..." autcomplete="off">
+                                    <input type="password" autcomplete="off" placeholder="New password..." id="mc-password-new">
+                                    <button onclick="changePswd()">Change password</button>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-title">Delete account<br></div>
+                                <div class="list-content">
+                                    <input id="mc-del-password" type="password" placeholder="Password..." autcomplete="off">
+                                    <button onclick="deleteAcc()">Delete account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="/page.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.css">
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it-mark@4.0.0/dist/markdown-it-mark.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
     <script>
-        globalThis.require = () => {
-            return katex
+        window.settings_template = {
+            replace_text: true,
+            detect_file_type: false,
+            debug: true,
+            upload_key: "",
+            upload_service: "",
+            enter_to_send: false,
+            theme: "coffee",
+            custom_css: "",
+            post_themes: false
         }
-        globalThis.module = {}
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it-katex@2.0.3/index.min.js"></script>
-    <script>
-        globalThis.markdownitKaTeX = globalThis.module.exports
-    </script>
-    
-    <script defer>
-        //TODO: plugin api based on this thingymabob (so that plugins wont have to edit the functions)
-        const chaosEvents = window.chaosEvents = new EventTarget();
-        chaosEvents.loaded = false;
-        chaosEvents.on = chaosEvents.addEventListener;
-        chaosEvents.once = function (event, listener) {
-            const actualListener = function (...e) {
-                chaosEvents
-                listener(...e);
-                chaosEvents.removeEventListener(event, actualListener)
-            };
-            chaosEvents.addEventListener(event, actualListener);
+
+        if (localStorage.getItem("settings") === "{}") {
+            localStorage.setItem("settings", JSON.stringify(settings_template))
+        } else {
+            settings_template = JSON.parse(localStorage.getItem("settings"))
         }
-        chaosEvents.doWhenReady = function (func) {
-            if (chaosEvents.loaded) {
-                func()
-            } else {
-                chaosEvents.once('ready', () => {
-                    func()
-                })
-            }
+        if (settings_template.theme) document.getElementById("site-theme").href = "/themes/" + settings_template.theme + ".css"
+        if (settings_template.custom_css) {
+            document.getElementById("mc-custom-site-css").value = settings_template.custom_css || ""
         }
+        document.getElementById("additional-styles").textContent = "\n@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');\n\n" + (settings_template.custom_css || "")
         
-    window.settings_template = {
-        replace_text: true,
-        detect_file_type: false,
-        debug: true,
-        upload_key: "",
-        upload_service: "",
-        enter_to_send: false, //TODO: implement this
-        custom_post_themes: true,
-    }
-    if (localStorage.getItem("settings") == null) {
-        localStorage.setItem("settings", JSON.stringify(settings_template))
-    };
+        var cssStylesEl = document.getElementById("custom-styles")
+        function changeSetting(k,v) {
+            settings_template[k] = v
+            if (k ==='post_themes') {
+                cssStylesEl.disabled = !settings_template.post_themes
+            }
+            localStorage.setItem("settings", JSON.stringify(settings_template))
+        }
     </script>
-    <script src="/helpers/functions.js"></script>
-    <script src="/helpers/ws.js"></script>
-    <script src="/helpers/notification.js"></script>
-    <script src="/main.js?93000" defer></script>
-    <script src="/butcanitrundoom.js"></script>
 </body>
+
 </html>

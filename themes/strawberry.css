@@ -1,0 +1,14 @@
+:root {
+    --nav-color: indianred;
+    --nav-darker-color: #ac4f54;
+    --nav-darkest-color: #843d3d;
+    --main-color: #E0BABA;
+    --main-darker-color: #B28D8D;
+    --main-darkest-color: #6A585B;
+    --main-lighter-color: #FFE8E8;
+    --text-color: #7B4545;
+    --icon-color: dark;
+    --link-color: #0088FF;
+    --input-color: #f7dede;
+    --post-textarea-markdown-color: #d9c0c0
+}

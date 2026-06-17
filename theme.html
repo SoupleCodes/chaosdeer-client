@@ -1,0 +1,57 @@
+<head>
+    <link rel="stylesheet" href="/global.css">
+    <link id="site-theme" rel="stylesheet" href>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+    </style>
+    <style>
+        #topbar {
+            height: 29px;
+        }
+        #rightnav {
+            width: 75px;
+        }
+        #rightnav a {
+            padding: 0px 7px;
+        }
+        #bottombar {
+            min-height: 28px;
+            padding-top: 3px;
+        }
+        #bottombar a {
+            font-size: 66%;
+            margin: 0px;
+            padding-right: 7px;
+            height: 17px;
+        }
+        #topbar { height: 23px }
+        #bottombar { min-height: 23px }
+        body {
+            font-size: 70%;
+        }
+    </style>
+    <div id="navbar">
+        <div id="topbar">
+            <div id="logo-container">
+                <img src="/images/logo.png" width="71" height="17">
+            </div>
+            <div id="rightnav">
+                <a id="nav-join" href="#">Join</a>
+                <a id="nav-logout" href="#">Logout</a>
+            </div>
+        </div>
+        <div id="bottombar">
+            <a class="">Home</a>
+            <a>Inbox</a>
+            <a>Livechat</a>
+            <a id="btn-moderation">Moderation</a>
+            <a class="selected">Settings</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var style = window.frameElement.getAttribute("data-style")
+        document.getElementById("site-theme").href = "/themes/" + style + ".css"
+    </script>
+</body>
