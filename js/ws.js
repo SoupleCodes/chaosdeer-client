@@ -143,8 +143,18 @@ function fillInbox(data) {
   if (data.length < 1) return;
   var timeGroups = Object.entries(Object.groupBy(data, ({ created }) => new Date(created * 1000).toLocaleString().split(",")[0]))
   var html = ''
-  var o = Object.entries(data) 
-  localStorage.setItem("last_inbox_id", o[o.length - 1][1]._id)
+  var o = Object.entries(data)
+  var lastInboxID = localStorage.getItem("last_inbox_id")
+  if (lastInboxID && (lastInboxID !== o[0][1]._id)) {
+    var inboxAEl = document.getElementById("btn-inbox")
+
+    var span = document.createElement("span")
+    span.classList.add("inbox-count")
+    span.textContent = "*" // I have no idea how to do the count thing lol
+
+    inboxAEl.appendChild(span)
+  }
+  localStorage.setItem("last_inbox_id", o[0][1]._id)
   for (let i = 0; i < timeGroups.length; i++) {
       var date = timeGroups[i][0]
       var g = timeGroups[i][1]
