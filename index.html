@@ -332,7 +332,7 @@
             post_themes: false
         }
 
-        if (localStorage.getItem("settings") === "{}") {
+        if (!localStorage.getItem("settings")) {
             localStorage.setItem("settings", JSON.stringify(settings_template))
         } else {
             settings_template = JSON.parse(localStorage.getItem("settings"))
