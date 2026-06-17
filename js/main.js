@@ -152,6 +152,16 @@ function scrollTopage(i,el) {
 // Add attachment logic
 function addAttachment(origin) {
     var url = window.prompt("Add an attachment via whitelisted URL")
+    try {
+        var testUrl = new URL(url)
+        if (!(imageWhitelist.includes(testUrl.hostname))) {
+            alert('URL hostname is not part of whitelist')
+            return null
+        }
+    } catch (__) {
+        alert("Not a real url")
+        return null
+    }
     if (![null,""].includes(url)) {
         if (attachments.length != 5) {
             attachments.push(url);
